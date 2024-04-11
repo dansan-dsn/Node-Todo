@@ -5,21 +5,23 @@ const port = 3000
 
 const app = express()
 
-// connection to mongodb
-mongoose.connect('', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-})
+
+// database connection
+
+
 
 // middleware
+app.use(express.static('public'))
 app.use(express.urlencoded({extended: true}))
-app.use(express.static('public')) // a 
-app.set('view engine', 'ejs') // a view enginee is set
+app.set('view enginee', 'ejs')
+
 
 // routes
+app.get('/', (req, res) => {
+    res.send('Hello there')
+})
 
-
-// server configurations.......
+// server congig
 app.listen(port, () => {
-    console.log(`listening on port ${port}...`)
+    console.log(`listening on port ${port}...`);
 })
