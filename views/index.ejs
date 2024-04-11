@@ -1,0 +1,26 @@
+<%- include("./partials/header") -%>
+
+<nav class="navbar navbar-light bg-light">
+  <a class="navbar-brand" href="/">Todo App</a>
+</nav>
+
+<div class="container mt-5">
+  <form action="/add/todo" method="POST" class="d-flex">
+    <input
+      type="text"
+      name="todo"
+      class="form-control"
+      placeholder="Enter Todo"
+    />
+    <input type="submit" value="Add Todo" class="btn btn-md btn-primary mx-2" />
+  </form>
+
+  <ul class="list-group my-5">
+    <li class="list-group-item">JavaScript</li>
+    <li class="list-group-item">Python</li>
+    <li class="list-group-item">C++</li>
+    <li class="list-group-item">C#</li>
+  </ul>
+</div>
+
+<%- include("./partials/footer") -%>
