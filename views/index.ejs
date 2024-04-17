@@ -1,11 +1,11 @@
-<%- include("./partials/header") -%>
+<%- include('./partials/header') %>
 
 <nav class="navbar navbar-light bg-light">
   <a class="navbar-brand" href="/">Todo App</a>
 </nav>
 
 <div class="container mt-5">
-  <form action="/add/todo" method="POST" class="d-flex">
+  <form action="/add/todo" class="d-flex" method="POST">
     <input
       type="text"
       name="todo"
@@ -14,13 +14,12 @@
     />
     <input type="submit" value="Add Todo" class="btn btn-md btn-primary mx-2" />
   </form>
-
-  <ul class="list-group my-5">
-    <li class="list-group-item">JavaScript</li>
-    <li class="list-group-item">Python</li>
-    <li class="list-group-item">C++</li>
-    <li class="list-group-item">C#</li>
+  <ul class="list-group mt-3">
+    <li class="list-group-item">Crass justo odio</li>
+    <li class="list-group-item">Crass justo odio</li>
+    <li class="list-group-item">Crass justo odio</li>
+    <li class="list-group-item">Crass justo odio</li>
   </ul>
 </div>
 
-<%- include("./partials/footer") -%>
+<%-include('./partials/footer') %>
