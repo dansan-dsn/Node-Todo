@@ -5,7 +5,10 @@ const port = 3000
 const app = express();
 
 // db connection
-// mongoose.connect('mongodb+srv://ddryn970:LVetoLq8rA8TTGzv@nodetodo.im95b0k.mongodb.net/?retryWrites=true&w=majority&appName=NodeTodo')
+mongoose.connect('mongodb+srv://ddryn970:noded@ntodo.di8bzsa.mongodb.net/?retryWrites=true&w=majority&appName=NTodo', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+});
 
 // middleware
 app.use(express.urlencoded({extended: true}))
