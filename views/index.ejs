@@ -1,14 +1,15 @@
 <%- include('./partials/header') %>
 
 <nav class="navbar navbar-light bg-light">
-  <a class="navbar-brand" href="/">Todo App</a>
+  <a href="/" class="navbar-brand">Todo App</a>
 </nav>
 
 <div class="container mt-5">
-  <form action="/add/todo" class="d-flex" method="POST">
+  <form action="/add/todo" method="post" class="d-flex">
     <input
       type="text"
       name="todo"
+      id=""
       class="form-control"
       placeholder="Enter Todo"
     />
@@ -22,4 +23,4 @@
   </ul>
 </div>
 
-<%-include('./partials/footer') %>
+<%- include('./partials/footer') %>
