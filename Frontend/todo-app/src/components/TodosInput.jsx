@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { TiMinus } from "react-icons/ti";
 import { FaPlus } from "react-icons/fa6";
 import { TiTick } from "react-icons/ti";
-import { createTodo } from "../api";
+import axios from "axios";
 
-const Todo = ({ onAddTodo }) => {
+const Todo = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [info, setInfo] = useState("");
@@ -15,19 +15,23 @@ const Todo = ({ onAddTodo }) => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventdefault();
-    if (title.trim() && info.trim()) {
-      const newTodo = await createTodo({ title, info });
-      onAddTodo(newTodo);
-      setMsg("Successfully Added a todo");
-      setTitle("");
-      setInfo("");
-    }
-    setMsg("");
+    e.preventDefault();
+    axios
+      .post("http://localhost:5005/todo/create", {
+        title,
+        info,
+      })
+      .then(() => {
+        setMsg("Todo Added successfully");
+        setTitle("");
+        setInfo("");
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
     <div>
+      {msg && <p className="text-orange-500 mx-5 md:mx-56">{msg}</p>}
       <form
         className="bg-neutral-700 p-5 mx-5 md:mx-56 cursor-pointer rounded"
         onSubmit={handleSubmit}
@@ -53,7 +57,7 @@ const Todo = ({ onAddTodo }) => {
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="Title"
-                className="p-3 rounded outline-none"
+                className="p-3 rounded outline-none p-holder"
               />
             </div>
             <div>
@@ -62,7 +66,7 @@ const Todo = ({ onAddTodo }) => {
                 value={info}
                 onChange={(e) => setInfo(e.target.value)}
                 placeholder="Content"
-                className="p-3 rounded outline-none mb-3"
+                className="p-3 rounded outline-none mb-3 p-holder"
               />
               <button type="submit" className="ml-3 btn btn-neutral">
                 Add
