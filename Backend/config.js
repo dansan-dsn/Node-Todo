@@ -1,7 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const todo = require("./router/todo");
-const mongoose = require("mongoose");
+const con = require("./model/model");
 const cors = require("cors");
 const PORT = process.env.PORT;
 
@@ -13,17 +13,11 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use("/todo", todo);
 
-mongoose
-  .connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
+con.connect((err) => {
+  if(err) return console.log(err.message)
+  console.log("Connected to DB")
+
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`)
   })
-  .then(() => {
-    console.log("connected to db");
-    app.listen(PORT, () => {
-      console.log(`server is running on port ${PORT}`);
-    });
-  })
-  .catch((error) => {
-    console.log("Database disconnected");
-  });
+})

@@ -1,69 +1,64 @@
 const express = require("express");
-const collection = require("../model/Todo");
-const mongoose = require("mongoose");
 const router = express.Router();
+const con = require("../model/model");
 
 router
-  .get("/all", async (req, res) => {
-    try {
-      const data = await collection.find({});
-      res.status(200).json(data);
-    } catch (error) {
-      res.status(500).json({ msg: error.message });
-    }
+  .get("/all", (req, res) => {
+    con.query("SELECT * FROM todos", (err, result) => {
+      if (err) return res.json({ err: err.message });
+      res.status(200).json(result);
+    });
   })
 
-  .get("/_one/:id", async (req, res) => {
-    try {
-      const { id } = req.params;
-      if (!mongoose.Types.ObjectId.isValid(id))
-        return res.status(404).json({ msg: "Invalid Id" });
+  .get("/_one/:id", (req, res) => {
+    const { id } = req.params;
+    con.query("SELECT * FROM todos WHERE id=?", id, (err, result) => {
+      if (err) return res.json({ err: err.message });
 
-      const todo = await collection.findById(id);
-      if (!todo) return res.status(404).json({ msg: "Todo Not Found" });
-
-      res.status(200).json(todo);
-    } catch (error) {
-      res.status(500).json({ msg: error.message });
-    }
+      if (result.length === 0)
+        return res.status(500).json({ msg: "Id not Found" }).status(404);
+      res.status(200).json(result);
+    });
   })
-  .post("/create", async (req, res) => {
-    try {
-      const todo = await collection.create(req.body);
-      res.status(201).json(todo);
-    } catch (error) {
-      res.status(500).json({ msg: error.message });
-    }
-  })
+  .post("/create", (req, res) => {
+    const { title, info } = req.body;
+    con.query(
+      "INSERT INTO todos(title, info) VALUES(?,?)",
+      [title, info],
+      (err, result) => {
+        if (err) return res.json({ err: err.message }).status(500);
 
-  .put("/update/:id", async (req, res) => {
-    try {
-      const { id } = req.params;
-      if (!mongoose.Types.ObjectId.isValid(id))
-        return res.status(404).json({ msg: "Invalid ID" });
-
-      const todo = await collection.findByIdAndUpdate(id, req.body);
-      if (!todo) return res.status(404).json({ msg: "Todo Not Found" });
-
-      res.status(200).json({ msg: "Todo updated successfully" });
-    } catch (error) {
-      res.status(500).json({ msg: error.message });
-    }
+        res.status(200).json({ msg: "Todo added!" });
+      }
+    );
   })
 
-  .delete("/remove/:id", async (req, res) => {
-    try {
-      const { id } = req.params;
-      if (!mongoose.Types.ObjectId.isValid(id))
-        return res.status(404).json({ msg: "Invalid Id" });
+  .put("/update/:id", (req, res) => {
+    const { id } = req.params;
+    const { title, info } = req.body;
+    con.query(
+      "UPDATE todos SET title=?, info=? WHERE id=?",
+      [title, info, id],
+      (err, result) => {
+        if (err) return res.json({ err: err.message }).status(500);
 
-      const todo = await collection.findByIdAndDelete(id);
-      if (!todo) return res.status(404).json({ msg: "Todo Not Found" });
+        if (result.affectedRows == 0) return res.json({ msg: "Id not Found" });
+        if (result.affectedRows == 1 && result.changedRows == 0)
+          return res.json({ msg: "same data towards a given id, NO UPDATE" });
 
-      res.status(200).json({ msg: "Todo deleted successfully" });
-    } catch (error) {
-      res.status(500).json({ msg: error.message });
-    }
+        res.status(200).json({ msg: "Todo updated successfully" });
+      }
+    );
+  })
+
+  .delete("/remove/:id", (req, res) => {
+    const { id } = req.params;
+    con.query("DELETE FROM todos WHERE id=?", id, (err, result) => {
+      if (err) return res.json({ err: err.message }).status(500);
+
+      if (result.affectedRows == 0) return res.json({ msg: "Id not Found" });
+      res.status(200).json({ msg: "Todo Deleted successfully" });
+    });
   });
 
 module.exports = router;
