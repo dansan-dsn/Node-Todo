@@ -31,7 +31,7 @@ const Todo = () => {
 
   return (
     <div>
-      {msg && <p className="text-orange-500 mx-5 md:mx-56">{msg}</p>}
+      {msg && <p className="text-teal-500 mx-5 md:mx-56">{msg}</p>}
       <form
         className="bg-neutral-700 p-5 mx-5 md:mx-56 cursor-pointer rounded"
         onSubmit={handleSubmit}

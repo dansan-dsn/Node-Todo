@@ -4,7 +4,7 @@ import { CiSearch } from "react-icons/ci";
 const Search = () => {
   return (
     <div>
-      <form action="">
+      <form>
         <label
           htmlFor="search"
           className="input input-bordered flex items-center gap-2"

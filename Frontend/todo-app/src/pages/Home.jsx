@@ -7,7 +7,7 @@ const Home = () => {
     <div>
       <div className="p-10 grid justify-center">
         <div>
-          <h1 className="text-2xl capitalize mb-5 text-center  text-emerald-700">
+          <h1 className="text-2xl capitalize mb-5 text-center font-bold text-amber-700">
             Todo App
           </h1>
         </div>
