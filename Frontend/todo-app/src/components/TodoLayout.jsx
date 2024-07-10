@@ -3,11 +3,13 @@ import { MdEdit, MdDelete } from "react-icons/md";
 import axios from "axios";
 import MyModal from "./Modal";
 
-const TodoLayout = () => {
+const TodoLayout = ({ filterSearch }) => {
   const [data, setData] = useState([]);
   const [checked, setChecked] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [todoDetails, setTodoDetails] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [filterTodos, setFilterTodos] = useState([]);
 
   const todoUrl = "http://localhost:5005/todo";
 
@@ -15,24 +17,48 @@ const TodoLayout = () => {
   useEffect(() => {
     axios
       .get(`${todoUrl}/all`)
-      .then((res) => setData(res.data))
-      .catch((err) => console.log(err));
-  }, [data]);
+      .then((res) => {
+        setData(res.data);
+        setFilterTodos(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+      });
+  }, [filterSearch]);
 
+  // filter todos based on search query
+  useEffect(() => {
+    if (filterSearch) {
+      const filteredTodos = data.filter((todo) =>
+        todo.title.toLowerCase().includes(filterSearch.toLowerCase())
+      );
+      setFilterTodos(filteredTodos);
+    } else {
+      setFilterTodos(data);
+    }
+  }, [filterSearch, data]);
+
+  // handle delete
   const handleDelete = (id) => {
     axios
       .delete(`${todoUrl}/remove/${id}`)
       .then(() => {
-        setData(data.filter((todo) => todo.id !== id));
+        const updatedData = data.filter((todo) => todo.id !== id);
+        setData(updatedData);
+        setFilteredContent(updatedData);
       })
       .catch((err) => console.log(err));
   };
 
+  // handle update
   const handleUpdate = (todo) => {
     setIsModalOpen(true);
     setTodoDetails(todo);
   };
 
+  // check the done todos
   const handleChecked = (id) => {
     const updatedCheckedTodos = checked.includes(id)
       ? checked.filter((todoId) => todoId !== id)
@@ -41,13 +67,22 @@ const TodoLayout = () => {
     setChecked(updatedCheckedTodos);
   };
 
+  // control delay search with loading
+  if (loading)
+    return (
+      <button type="button" className="bg-indigo-500 items-center" disabled>
+        <svg className="animate-spin h-5 w-5 mr-3" viewBox="0 0 24 24"></svg>
+        Loading...
+      </button>
+    );
+
   return (
     <>
       <div className="mt-10">
         <h2 className="text-center text-xl font-extrabold text-amber-900">
           Your Todos
         </h2>
-        {data.map((todo) => {
+        {filterTodos.map((todo) => {
           return (
             <div
               className="bg-zinc-800 p-5 mx-5 md:mx-56 rounded mb-3"

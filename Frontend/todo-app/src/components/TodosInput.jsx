@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { TiMinus } from "react-icons/ti";
 import { FaPlus } from "react-icons/fa6";
-import { TiTick } from "react-icons/ti";
 import axios from "axios";
 
 const Todo = () => {
@@ -16,6 +15,9 @@ const Todo = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!title || !info) {
+      return setMsg("Please fill all the fields");
+    }
     axios
       .post("http://localhost:5005/todo/create", {
         title,
@@ -36,12 +38,9 @@ const Todo = () => {
         className="bg-neutral-700 p-5 mx-5 md:mx-56 cursor-pointer rounded"
         onSubmit={handleSubmit}
       >
-        <label
-          className=" justify-between flex cursor-pointer"
-          onClick={handleToggle}
-        >
+        <label className=" justify-between flex cursor-pointer">
           Make Todos
-          <span className="">
+          <span className="" onClick={handleToggle}>
             {isOpen ? (
               <TiMinus title="collapse" />
             ) : (

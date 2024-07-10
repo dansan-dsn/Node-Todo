@@ -1,21 +1,19 @@
-import Search from "../components/Search";
 import TodoInput from "../components/TodosInput";
-import TodoLayout from "../components/TodoLayout";
+import Search from "../components/Search";
 
 const Home = () => {
   return (
     <div>
-      <div className="p-10 grid justify-center">
+      <div className="p-5 grid justify-center">
         <div>
-          <h1 className="text-2xl capitalize mb-5 text-center font-bold text-amber-700">
+          <h1 className="text-2xl capitalize text-center font-bold text-amber-700">
             Todo App
           </h1>
         </div>
-        <Search />
       </div>
-      <div className="">
+      <div>
         <TodoInput />
-        <TodoLayout />
+        <Search />
       </div>
     </div>
   );
