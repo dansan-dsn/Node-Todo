@@ -35,7 +35,7 @@ const Todo = () => {
     <div>
       {msg && <p className="text-teal-500 mx-5 md:mx-56">{msg}</p>}
       <form
-        className="bg-neutral-700 p-5 mx-5 md:mx-56 cursor-pointer rounded"
+        className="bg-neutral-700 p-5 mx-5 md:mx-20 lg:mx-56 cursor-pointer rounded"
         onSubmit={handleSubmit}
       >
         <label className=" justify-between flex cursor-pointer">

@@ -8,36 +8,36 @@ const TodoLayout = ({ filterSearch }) => {
   const [checked, setChecked] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [todoDetails, setTodoDetails] = useState(0);
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
   const [filterTodos, setFilterTodos] = useState([]);
 
-  const todoUrl = "http://localhost:5005/todo";
+  const todoUrl = "http://localhost:5001/todo";
 
   // fetching todos
   useEffect(() => {
-    axios
-      .get(`${todoUrl}/all`)
-      .then((res) => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get(`${todoUrl}/all`);
         setData(res.data);
         setFilterTodos(res.data);
-        setLoading(false);
-      })
-      .catch((err) => {
+      } catch (err) {
         console.log(err);
-        setLoading(false);
-      });
-  }, [filterSearch]);
+      }
+    };
+
+    fetchData();
+    const interval = setInterval(fetchData, 5000); // Poll every 3 seconds
+    return () => clearInterval(interval);
+  }, []);
 
   // filter todos based on search query
   useEffect(() => {
-    if (filterSearch) {
-      const filteredTodos = data.filter((todo) =>
-        todo.title.toLowerCase().includes(filterSearch.toLowerCase())
-      );
-      setFilterTodos(filteredTodos);
-    } else {
-      setFilterTodos(data);
-    }
+    if (!filterSearch) return setFilterTodos(data);
+
+    const filteredTodos = data.filter((todo) =>
+      todo.title.toLowerCase().includes(filterSearch.toLowerCase())
+    );
+    setFilterTodos(filteredTodos);
   }, [filterSearch, data]);
 
   // handle delete
@@ -47,7 +47,7 @@ const TodoLayout = ({ filterSearch }) => {
       .then(() => {
         const updatedData = data.filter((todo) => todo.id !== id);
         setData(updatedData);
-        setFilteredContent(updatedData);
+        setFilterTodos(updatedData);
       })
       .catch((err) => console.log(err));
   };
@@ -68,13 +68,13 @@ const TodoLayout = ({ filterSearch }) => {
   };
 
   // control delay search with loading
-  if (loading)
-    return (
-      <button type="button" className="bg-indigo-500 items-center" disabled>
-        <svg className="animate-spin h-5 w-5 mr-3" viewBox="0 0 24 24"></svg>
-        Loading...
-      </button>
-    );
+  // if (loading)
+  //   return (
+  //     <button type="button" className="bg-indigo-500 items-center" disabled>
+  //       <svg className="animate-spin h-5 w-5 mr-3" viewBox="0 0 24 24"></svg>
+  //       Loading...
+  //     </button>
+  //   );
 
   return (
     <>
@@ -85,7 +85,7 @@ const TodoLayout = ({ filterSearch }) => {
         {filterTodos.map((todo) => {
           return (
             <div
-              className="bg-zinc-800 p-5 mx-5 md:mx-56 rounded mb-3"
+              className="bg-zinc-800 p-5 mx-5 md:mx-20 lg:mx-32 rounded mb-3"
               key={todo.id}
             >
               <div className="flex justify-between">
