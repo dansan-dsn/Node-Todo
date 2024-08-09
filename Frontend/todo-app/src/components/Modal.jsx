@@ -4,7 +4,7 @@ import axios from "axios";
 const Modal = ({ onRequestClose, id }) => {
   const [data, setData] = useState([]);
 
-  const todoUrl = "http://localhost:5001/todo";
+  const todoUrl = "http://localhost:5005/todo";
   // useParams;
   useEffect(() => {
     axios

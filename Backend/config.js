@@ -14,10 +14,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/todo", todo);
 
 con.connect((err) => {
-  if(err) return console.log(err.message)
-  console.log("Connected to DB")
+  if (err) return console.log(err.message);
+  console.log("Connected to DB");
 
   app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`)
-  })
-})
+    console.log(`Server is running on port ${PORT}`);
+  });
+});

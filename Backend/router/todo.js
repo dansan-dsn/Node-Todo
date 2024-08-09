@@ -4,7 +4,7 @@ const con = require("../model/model");
 
 router
   .get("/all", (req, res) => {
-    con.query("SELECT * FROM todos", (err, result) => {
+    con.query("SELECT * FROM my_table", (err, result) => {
       if (err) return res.json({ err: err.message });
       res.status(200).json(result);
     });
@@ -12,7 +12,7 @@ router
 
   .get("/_one/:id", (req, res) => {
     const { id } = req.params;
-    con.query("SELECT * FROM todos WHERE id=?", id, (err, result) => {
+    con.query("SELECT * FROM my_table WHERE id=?", id, (err, result) => {
       if (err) return res.json({ err: err.message });
 
       if (result.length === 0)
@@ -23,7 +23,7 @@ router
   .post("/create", (req, res) => {
     const { title, info } = req.body;
     con.query(
-      "INSERT INTO todos(title, info) VALUES(?,?)",
+      "INSERT INTO my_table(title, info) VALUES(?,?)",
       [title, info],
       (err, result) => {
         if (err) return res.json({ err: err.message }).status(500);
@@ -37,7 +37,7 @@ router
     const { id } = req.params;
     const { title, info } = req.body;
     con.query(
-      "UPDATE todos SET title=?, info=? WHERE id=?",
+      "UPDATE my_table SET title=?, info=? WHERE id=?",
       [title, info, id],
       (err, result) => {
         if (err) return res.json({ err: err.message }).status(500);
@@ -53,7 +53,7 @@ router
 
   .delete("/remove/:id", (req, res) => {
     const { id } = req.params;
-    con.query("DELETE FROM todos WHERE id=?", id, (err, result) => {
+    con.query("DELETE FROM my_table WHERE id=?", id, (err, result) => {
       if (err) return res.json({ err: err.message }).status(500);
 
       if (result.affectedRows == 0) return res.json({ msg: "Id not Found" });

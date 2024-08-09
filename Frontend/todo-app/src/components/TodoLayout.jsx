@@ -11,7 +11,7 @@ const TodoLayout = ({ filterSearch }) => {
   // const [loading, setLoading] = useState(true);
   const [filterTodos, setFilterTodos] = useState([]);
 
-  const todoUrl = "http://localhost:5001/todo";
+  const todoUrl = "http://localhost:5005/todo";
 
   // fetching todos
   useEffect(() => {
