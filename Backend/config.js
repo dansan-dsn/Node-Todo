@@ -3,7 +3,7 @@ const express = require("express");
 const todo = require("./router/todo");
 const con = require("./model/model");
 const cors = require("cors");
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 5005;
 
 const app = express();
 
