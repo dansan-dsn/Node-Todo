@@ -6,14 +6,14 @@ A simple Todo list application built with Node.js.
 
 - Add, edit, delete, and view todos
 - User-friendly interface
-- Built with modern JavaScript and Node.js
+- Built with modern JavaScript(Reactjs) and Node.js
 
 ## Technology Stack
 
 - **Node.js**: Backend server
 - **Express**: Web framework for Node.js
-- **MongoDB**: Database for storing todos
-- **Reactjs**: Frontend for user interface
+- **MySQL**: Database for storing todos
+- **Reactjs**: Frontend for user interacivity
 - **Tailwind**: Css Framework for user interface
 
 ## Installation
@@ -27,7 +27,7 @@ A simple Todo list application built with Node.js.
    ````bash
    npm install
 
-3.Set up your database and update the connection
+3.Set up your MySQL database and update the connection
 
 4. Start the server
     ```bash
