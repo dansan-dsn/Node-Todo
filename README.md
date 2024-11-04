@@ -22,8 +22,12 @@ A simple Todo list application built with Node.js.
    ```bash
    git clone https://github.com/dansan-dsn/Node-Todo.git
    cd Node-Todo
+   ```
+   a. For react.
+   ```bash
+   cd Frontend\my
 
-2. Install dependecies
+3. Install dependecies(for Node and rect respectively).
    ````bash
    npm install
 
