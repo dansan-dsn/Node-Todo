@@ -26,23 +26,17 @@ A simple Todo list application built with Node.js.
    a. For react.
    ```bash
    cd Frontend/todo-app
+   npm install
+   npm run dev
    ```
    b. For Node
    ```bash
    cd Backend
+   npm install
+   npm start
    ```
 
-3. Install dependecies(for Node and rect respectively).
-   ````bash
-   npm install
+2.Set up your MySQL database and update the connection
 
-3.Set up your MySQL database and update the connection
-
-4. a. Start the server
-      ```bash
-      npm start
-   b. Start the react
-        npm run dev
-
-5. open the browser and go to
+3. open the browser and go to
     http://localhost:3000
